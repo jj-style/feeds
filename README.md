@@ -1,13 +1,18 @@
-## gorilla/feeds
-![testing](https://github.com/gorilla/feeds/actions/workflows/test.yml/badge.svg)
-[![codecov](https://codecov.io/github/gorilla/feeds/branch/main/graph/badge.svg)](https://codecov.io/github/gorilla/feeds)
-[![godoc](https://godoc.org/github.com/gorilla/feeds?status.svg)](https://godoc.org/github.com/gorilla/feeds)
-[![sourcegraph](https://sourcegraph.com/github.com/gorilla/feeds/-/badge.svg)](https://sourcegraph.com/github.com/gorilla/feeds?badge)
+## jj-style/feeds
+![testing](https://github.com/jj-style/feeds/actions/workflows/test.yml/badge.svg)
+[![codecov](https://codecov.io/github/jj-style/feeds/branch/main/graph/badge.svg)](https://codecov.io/github/jj-style/feeds)
+[![godoc](https://godoc.org/github.com/jj-style/feeds?status.svg)](https://godoc.org/github.com/jj-style/feeds)
+[![sourcegraph](https://sourcegraph.com/github.com/jj-style/feeds/-/badge.svg)](https://sourcegraph.com/github.com/jj-style/feeds?badge)
 
 ![Gorilla Logo](https://github.com/gorilla/.github/assets/53367916/d92caabf-98e0-473e-bfbf-ab554ba435e5)
 
 feeds is a web feed generator library for generating RSS, Atom and JSON feeds from Go
 applications.
+
+### Fork
+Fork of [gorilla/feeds](https://github.com/gorilla/feeds) adding additional RSS namespaces including:
+- [x] itunes
+- [ ] podcasting 2.0
 
 ### Goals
 
@@ -28,7 +33,7 @@ import (
     "fmt"
     "log"
     "time"
-    "github.com/gorilla/feeds"
+    "github.com/jj-style/feeds"
 )
 
 func main() {

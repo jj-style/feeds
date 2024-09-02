@@ -3,17 +3,17 @@ Syndication (feed) generator library for golang.
 
 Installing
 
-	go get github.com/gorilla/feeds
+	go get github.com/jj-style/feeds
 
 Feeds provides a simple, generic Feed interface with a generic Item object as well as RSS, Atom and JSON Feed specific RssFeed, AtomFeed and JSONFeed objects which allow access to all of each spec's defined elements.
 
-Examples
+# Examples
 
 Create a Feed and some Items in that feed using the generic interfaces:
 
 	import (
 		"time"
-		. "github.com/gorilla/feeds"
+		. "github.com/jj-style/feeds"
 	)
 
 	now = time.Now()
@@ -65,7 +65,7 @@ From here, you can modify or add each syndication's specific fields before outpu
 
 	atomFeed.Subtitle = "plays the blues"
 	atom, err := ToXML(atomFeed)
-	rssFeed.Generator = "gorilla/feeds v1.0 (github.com/gorilla/feeds)"
+	rssFeed.Generator = "jj-style/feeds v1.0 (github.com/jj-style/feeds)"
 	rss, err := ToXML(rssFeed)
 	jsonFeed.NextUrl = "https://www.example.com/feed.json?page=2"
 	json, err := jsonFeed.ToJSON()
