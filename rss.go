@@ -15,6 +15,7 @@ type RssFeedXml struct {
 	XMLName          xml.Name `xml:"rss"`
 	Version          string   `xml:"version,attr"`
 	ContentNamespace string   `xml:"xmlns:content,attr"`
+	ITunesNamespace  string   `xml:"xmlns:itunes,attr"`
 	Channel          *RssFeed
 }
 
@@ -62,6 +63,7 @@ type RssFeed struct {
 	Image          *RssImage
 	TextInput      *RssTextInput
 	Items          []*RssItem `xml:"item"`
+	*ITunesFeed
 }
 
 type RssItem struct {
@@ -77,6 +79,7 @@ type RssItem struct {
 	Guid        *RssGuid // Id used
 	PubDate     string   `xml:"pubDate,omitempty"` // created or updated
 	Source      string   `xml:"source,omitempty"`
+	*ITunesItem
 }
 
 type RssEnclosure struct {
@@ -104,6 +107,7 @@ func newRssItem(i *Item) *RssItem {
 		Title:       i.Title,
 		Description: i.Description,
 		PubDate:     anyTimeFormat(time.RFC1123Z, i.Created, i.Updated),
+		ITunesItem:  i.ITunes,
 	}
 	if i.Id != "" {
 		item.Guid = &RssGuid{Id: i.Id, IsPermaLink: i.IsPermaLink}
@@ -159,6 +163,7 @@ func (r *Rss) RssFeed() *RssFeed {
 		LastBuildDate:  build,
 		Copyright:      r.Copyright,
 		Image:          image,
+		ITunesFeed:     r.ITunes,
 	}
 	for _, i := range r.Items {
 		channel.Items = append(channel.Items, newRssItem(i))
@@ -179,5 +184,6 @@ func (r *RssFeed) FeedXml() interface{} {
 		Version:          "2.0",
 		Channel:          r,
 		ContentNamespace: "http://purl.org/rss/1.0/modules/content/",
+		ITunesNamespace:  ITunesXmlNamespace,
 	}
 }
