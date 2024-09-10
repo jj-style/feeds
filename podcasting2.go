@@ -49,7 +49,7 @@ type Podcasting2AlternateEnclosure struct {
 }
 
 type Podcasting2Source struct {
-	Url string `xml:"url,attr"`
+	Uri string `xml:"uri,attr"`
 }
 
 type Podcasting2LiveItem struct {
