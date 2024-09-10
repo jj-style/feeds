@@ -12,11 +12,12 @@ import (
 
 // private wrapper around the RssFeed which gives us the <rss>..</rss> xml
 type RssFeedXml struct {
-	XMLName          xml.Name `xml:"rss"`
-	Version          string   `xml:"version,attr"`
-	ContentNamespace string   `xml:"xmlns:content,attr"`
-	ITunesNamespace  string   `xml:"xmlns:itunes,attr"`
-	Channel          *RssFeed
+	XMLName           xml.Name `xml:"rss"`
+	Version           string   `xml:"version,attr"`
+	ContentNamespace  string   `xml:"xmlns:content,attr"`
+	ITunesNamespace   string   `xml:"xmlns:itunes,attr"`
+	Podcast2Namespace string   `xml:"xmlns:podcast,attr"`
+	Channel           *RssFeed
 }
 
 type RssContent struct {
@@ -64,6 +65,8 @@ type RssFeed struct {
 	TextInput      *RssTextInput
 	Items          []*RssItem `xml:"item"`
 	*ITunesFeed
+	*Podcasting2Feed
+	LiveItem *Podcasting2LiveItem
 }
 
 type RssItem struct {
@@ -80,6 +83,7 @@ type RssItem struct {
 	PubDate     string   `xml:"pubDate,omitempty"` // created or updated
 	Source      string   `xml:"source,omitempty"`
 	*ITunesItem
+	*Podcasting2Item
 }
 
 type RssEnclosure struct {
@@ -104,10 +108,11 @@ type Rss struct {
 // create a new RssItem with a generic Item struct's data
 func newRssItem(i *Item) *RssItem {
 	item := &RssItem{
-		Title:       i.Title,
-		Description: i.Description,
-		PubDate:     anyTimeFormat(time.RFC1123Z, i.Created, i.Updated),
-		ITunesItem:  i.ITunes,
+		Title:           i.Title,
+		Description:     i.Description,
+		PubDate:         anyTimeFormat(time.RFC1123Z, i.Created, i.Updated),
+		ITunesItem:      i.ITunes,
+		Podcasting2Item: i.Podcasting2,
 	}
 	if i.Id != "" {
 		item.Guid = &RssGuid{Id: i.Id, IsPermaLink: i.IsPermaLink}
@@ -155,15 +160,17 @@ func (r *Rss) RssFeed() *RssFeed {
 		href = r.Link.Href
 	}
 	channel := &RssFeed{
-		Title:          r.Title,
-		Link:           href,
-		Description:    r.Description,
-		ManagingEditor: author,
-		PubDate:        pub,
-		LastBuildDate:  build,
-		Copyright:      r.Copyright,
-		Image:          image,
-		ITunesFeed:     r.ITunes,
+		Title:           r.Title,
+		Link:            href,
+		Description:     r.Description,
+		ManagingEditor:  author,
+		PubDate:         pub,
+		LastBuildDate:   build,
+		Copyright:       r.Copyright,
+		Image:           image,
+		ITunesFeed:      r.ITunes,
+		Podcasting2Feed: r.Podcasting2,
+		LiveItem:        r.Podcasting2LiveItem,
 	}
 	for _, i := range r.Items {
 		channel.Items = append(channel.Items, newRssItem(i))
@@ -181,9 +188,10 @@ func (r *Rss) FeedXml() interface{} {
 // FeedXml returns an XML-ready object for an RssFeed object
 func (r *RssFeed) FeedXml() interface{} {
 	return &RssFeedXml{
-		Version:          "2.0",
-		Channel:          r,
-		ContentNamespace: "http://purl.org/rss/1.0/modules/content/",
-		ITunesNamespace:  ITunesXmlNamespace,
+		Version:           "2.0",
+		Channel:           r,
+		ContentNamespace:  "http://purl.org/rss/1.0/modules/content/",
+		ITunesNamespace:   ITunesXmlNamespace,
+		Podcast2Namespace: Podcasting2Namespace,
 	}
 }

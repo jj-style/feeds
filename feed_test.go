@@ -71,7 +71,7 @@ var atomOutput = `<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.
   </entry>
 </feed>`
 
-var rssOutput = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+var rssOutput = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0">
   <channel>
     <title>jmoiron.net blog</title>
     <link>http://jmoiron.net/blog</link>
@@ -340,7 +340,7 @@ var atomOutputSorted = `<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http:
   </entry>
 </feed>`
 
-var rssOutputSorted = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+var rssOutputSorted = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0">
   <channel>
     <title>jmoiron.net blog</title>
     <link>http://jmoiron.net/blog</link>
@@ -677,5 +677,76 @@ func TestRssFeedITunes(t *testing.T) {
 
 	if rss != wantItunesRss {
 		t.Errorf("Rss not what was expected.  Got:\n%s\n\nExpected:\n%s\n", rss, wantItunesRss)
+	}
+}
+
+//go:embed testPodcasting2.0.rss
+var wantPodcasting2Rss string
+
+func TestRssFeedPodcast2(t *testing.T) {
+
+	now, err := time.Parse(time.RFC3339, "2013-01-16T21:52:35-05:00")
+	if err != nil {
+		t.Error(err)
+	}
+	tz := time.FixedZone("EST", -5*60*60)
+	now = now.In(tz)
+
+	feed := &Feed{
+		Title:       "My Awesome Podcast",
+		Link:        &Link{Href: "http://mypodcast.com/rss"},
+		Description: "a really cool podcast",
+		Author:      &Author{Name: "Jason Moiron", Email: "jmoiron@jmoiron.net"},
+		Created:     now,
+		Copyright:   "This work is copyright © Benjamin Button",
+	}
+
+	feed.Items = []*Item{
+		{
+			Title:       "Episode 1",
+			Link:        &Link{Href: "http://mypodcast.com/rss/1"},
+			Description: "The first episode of the podcast.",
+			Author:      &Author{Name: "Jason Moiron", Email: "jmoiron@jmoiron.net"},
+			Created:     now,
+			Enclosure: &Enclosure{
+				Url:    "http://mypodcast.com/static/1.mp3",
+				Length: "100",
+				Type:   "audio/mpeg",
+			},
+			ITunes: &ITunesItem{
+				Duration:    "2m30s",
+				EpisodeType: ITunesEpisodeTypeTrailer,
+				Author:      "Jason Moiron",
+			},
+		},
+	}
+
+	feed.Podcasting2LiveItem = &Podcasting2LiveItem{
+		Status: "live",
+		Start:  "2021-09-26T07:30:00.000-0600",
+		End:    "2021-09-26T09:30:00.000-0600",
+		RssItem: &RssItem{
+			Title:       "Podcasting 2.0 Live Stream",
+			Link:        "http://mypodcast.com/rss",
+			Description: "a really cool podcast",
+			Guid:        &RssGuid{Id: "e32b4890-983b-4ce5-8b46-f2d6bc1d8819"},
+			Enclosure:   &RssEnclosure{Url: "https://example.com/pc20/livestream?format=.mp3", Type: "audio/mpeg", Length: "312"},
+			Podcasting2Item: &Podcasting2Item{
+				ContentLink: &Podcasting2ContentLink{
+					Href: "https://example.com/html/livestream",
+					Text: "Listen Live!",
+				},
+			},
+		},
+	}
+
+	rss, err := feed.ToRss()
+	if err != nil {
+		t.Errorf("unexpected error writing RSS: %v", err)
+	}
+
+	// TODO - embed example
+	if rss != wantPodcasting2Rss {
+		t.Errorf("Rss not what was expected.  Got:\n%s\n\nExpected:\n%s\n", rss, wantPodcasting2Rss)
 	}
 }

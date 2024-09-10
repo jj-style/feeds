@@ -17,21 +17,13 @@
       <itunes:author>Jason Moiron</itunes:author>
       <itunes:episodeType>Trailer</itunes:episodeType>
     </item>
-    <item>
-      <title>Episode 2</title>
-      <link>http://mypodcast.com/rss/2</link>
-      <description>The second episode of the podcast.</description>
-      <author>Jason Moiron</author>
-      <enclosure url="http://mypodcast.com/static/2.mp3" length="200" type="audio/mpeg"></enclosure>
-      <pubDate>Wed, 16 Jan 2013 21:52:35 -0500</pubDate>
-      <itunes:duration>1h0m</itunes:duration>
-      <itunes:author>Jason Moiron</itunes:author>
-      <itunes:episodeType>Full</itunes:episodeType>
-    </item>
-    <itunes:category text="technology"></itunes:category>
-    <itunes:explicit>false</itunes:explicit>
-    <itunes:type>Episodic</itunes:type>
-    <itunes:title>My Awesome Podcast in ITunes</itunes:title>
-    <itunes:image href="http://mypodcast.com/static/ituneslogo.jpg"></itunes:image>
+    <podcast:liveItem status="live" start="2021-09-26T07:30:00.000-0600" end="2021-09-26T09:30:00.000-0600">
+      <title>Podcasting 2.0 Live Stream</title>
+      <link>http://mypodcast.com/rss</link>
+      <description>a really cool podcast</description>
+      <enclosure url="https://example.com/pc20/livestream?format=.mp3" length="312" type="audio/mpeg"></enclosure>
+      <guid>e32b4890-983b-4ce5-8b46-f2d6bc1d8819</guid>
+      <podcast:contentLink href="https://example.com/html/livestream">Listen Live!</podcast:contentLink>
+    </podcast:liveItem>
   </channel>
 </rss>

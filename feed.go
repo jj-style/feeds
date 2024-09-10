@@ -38,21 +38,24 @@ type Item struct {
 	Enclosure   *Enclosure
 	Content     string
 	ITunes      *ITunesItem
+	Podcasting2 *Podcasting2Item
 }
 
 type Feed struct {
-	Title       string
-	Link        *Link
-	Description string
-	Author      *Author
-	Updated     time.Time
-	Created     time.Time
-	Id          string
-	Subtitle    string
-	Items       []*Item
-	Copyright   string
-	Image       *Image
-	ITunes      *ITunesFeed
+	Title               string
+	Link                *Link
+	Description         string
+	Author              *Author
+	Updated             time.Time
+	Created             time.Time
+	Id                  string
+	Subtitle            string
+	Items               []*Item
+	Copyright           string
+	Image               *Image
+	ITunes              *ITunesFeed
+	Podcasting2         *Podcasting2Feed
+	Podcasting2LiveItem *Podcasting2LiveItem
 }
 
 // add a new Item to a Feed
