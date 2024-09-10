@@ -11,8 +11,8 @@ const (
 )
 
 type Podcasting2Feed struct {
-	Locked  Podcasting2Locked  `xml:"podcast:locked,omitempty"`
-	Podping Podcasting2Podping `xml:"podcast:podping,omitempty"`
+	Locked  *Podcasting2Locked  `xml:"podcast:locked,omitempty"`
+	Podping *Podcasting2Podping `xml:"podcast:podping,omitempty"`
 }
 
 type Podcasting2Podping struct {
