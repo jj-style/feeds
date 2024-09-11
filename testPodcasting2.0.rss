@@ -15,7 +15,7 @@
       <pubDate>Wed, 16 Jan 2013 21:52:35 -0500</pubDate>
       <itunes:duration>2m30s</itunes:duration>
       <itunes:author>Jason Moiron</itunes:author>
-      <itunes:episodeType>Trailer</itunes:episodeType>
+      <itunes:episodeType>trailer</itunes:episodeType>
     </item>
     <podcast:liveItem status="live" start="2021-09-26T07:30:00.000-0600" end="2021-09-26T09:30:00.000-0600">
       <title>Podcasting 2.0 Live Stream</title>

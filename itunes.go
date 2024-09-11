@@ -31,14 +31,14 @@ type ITunesItem struct {
 type ITunesEpisodeType string
 
 const (
-	ITunesEpisodeTypeFull    ITunesEpisodeType = "Full"
-	ITunesEpisodeTypeTrailer ITunesEpisodeType = "Trailer"
-	ITunesEpisodeTypeBonus   ITunesEpisodeType = "Bonus"
+	ITunesEpisodeTypeFull    ITunesEpisodeType = "full"
+	ITunesEpisodeTypeTrailer ITunesEpisodeType = "trailer"
+	ITunesEpisodeTypeBonus   ITunesEpisodeType = "bonus"
 )
 
 type ITunesFeedType string
 
 const (
-	ITunesFeedTypeEpisodic ITunesFeedType = "Episodic"
-	ITunesFeedTypeSerial   ITunesFeedType = "Serial"
+	ITunesFeedTypeEpisodic ITunesFeedType = "episodic"
+	ITunesFeedTypeSerial   ITunesFeedType = "serial"
 )
